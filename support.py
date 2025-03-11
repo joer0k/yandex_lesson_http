@@ -25,13 +25,23 @@ def get_spn(lowerCorner: str, upperCorner: str) -> str:
     return f'{dx}, {dy}'
 
 
-def get_staticmap(coords, coords2, spn):
+def get_staticmap(coords_place, coords_pharmacy):
     apikey = "371e1360-5397-45a5-9639-2e7da34bd060"
     map_params = {
         # "ll": ",".join(coords.split(' ')),
         # "spn": spn,
         "apikey": apikey,
-        'pt': f'{",".join(coords.split(" "))}~{",".join(coords2)}'
+        'pt': f'{",".join(coords_place.split(" "))},home'
+              f'~{coords_pharmacy[0][0]},{coords_pharmacy[0][1]}'
+              f'~{coords_pharmacy[1][0]},{coords_pharmacy[1][1]}'
+              f'~{coords_pharmacy[2][0]},{coords_pharmacy[2][1]}'
+              f'~{coords_pharmacy[3][0]},{coords_pharmacy[3][1]}'
+              f'~{coords_pharmacy[4][0]},{coords_pharmacy[4][1]}'
+              f'~{coords_pharmacy[5][0]},{coords_pharmacy[5][1]}'
+              f'~{coords_pharmacy[6][0]},{coords_pharmacy[6][1]}'
+              f'~{coords_pharmacy[7][0]},{coords_pharmacy[7][1]}'
+              f'~{coords_pharmacy[8][0]},{coords_pharmacy[8][1]}'
+              f'~{coords_pharmacy[9][0]},{coords_pharmacy[9][1]}'
     }
     map_api_server = "https://static-maps.yandex.ru/v1"
     response = requests.get(map_api_server, params=map_params)
