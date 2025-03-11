@@ -17,6 +17,20 @@ def get_geocode_json(arg: str):
     return response.json()["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
 
 
+def get_district(coordinates):
+    geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
+    geocoder_params = {
+        "apikey": 'd2f5711d-9e67-414c-aa2c-d7c0465aea3e',
+        "geocode": coordinates,
+        "format": "json",
+        "kind": 'district'}
+    response = requests.get(geocoder_api_server, params=geocoder_params)
+    if not response:
+        print(f'Ошибка выполнения запроса: {response.content}')
+        sys.exit(1)
+    return response.json()["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
+
+
 def get_spn(lowerCorner: str, upperCorner: str) -> str:
     left, button = lowerCorner.split()
     right, top = upperCorner.split()
