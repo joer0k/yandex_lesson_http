@@ -44,7 +44,7 @@ def get_staticmap(coords, spn):
     map_params = {
         "ll": ",".join(coords.split(' ')),
         "spn": spn,
-        'style': 'elements:label|stylers.opacity:0',
+        'style': 'tags.any:admin|elements:label|stylers.opacity:0',
         "apikey": apikey,
     }
     map_api_server = "https://static-maps.yandex.ru/v1"
