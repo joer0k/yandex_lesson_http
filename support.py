@@ -17,6 +17,20 @@ def get_geocode_json(arg: str):
     return response.json()["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
 
 
+def get_district(coordinates):
+    geocoder_api_server = "http://geocode-maps.yandex.ru/1.x/"
+    geocoder_params = {
+        "apikey": 'd2f5711d-9e67-414c-aa2c-d7c0465aea3e',
+        "geocode": coordinates,
+        "format": "json",
+        "kind": 'district'}
+    response = requests.get(geocoder_api_server, params=geocoder_params)
+    if not response:
+        print(f'Ошибка выполнения запроса: {response.content}')
+        sys.exit(1)
+    return response.json()["response"]["GeoObjectCollection"]["featureMember"][0]["GeoObject"]
+
+
 def get_spn(lowerCorner: str, upperCorner: str) -> str:
     left, button = lowerCorner.split()
     right, top = upperCorner.split()
@@ -25,13 +39,13 @@ def get_spn(lowerCorner: str, upperCorner: str) -> str:
     return f'{dx}, {dy}'
 
 
-def get_staticmap(coords, coords2, spn):
+def get_staticmap(coords, spn):
     apikey = "371e1360-5397-45a5-9639-2e7da34bd060"
     map_params = {
-        # "ll": ",".join(coords.split(' ')),
-        # "spn": spn,
+        "ll": ",".join(coords.split(' ')),
+        "spn": spn,
+        'style': 'elements:label|stylers.opacity:0',
         "apikey": apikey,
-        'pt': f'{",".join(coords.split(" "))}~{",".join(coords2)}'
     }
     map_api_server = "https://static-maps.yandex.ru/v1"
     response = requests.get(map_api_server, params=map_params)
