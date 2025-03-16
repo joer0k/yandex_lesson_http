@@ -12,6 +12,10 @@ spn = ','.join(map(lambda x: str(float(x) / 10),
 res = search_organization(spn, ','.join(toponym_coodrinates.split()), 'Аптека')
 for elem in res:
     response = get_staticmap(toponym_coodrinates, list(map(str, elem['geometry']['coordinates'])), spn)
+    print(elem['properties']['name'], elem['properties']['description'],
+          elem['properties']['CompanyMetaData']['Hours']['text'],
+          get_distance(list(map(float, toponym_coodrinates.split(" "))),
+                       list(map(float, elem['geometry']['coordinates']))), sep='\n')
     map_file = "map.png"
     with open(map_file, "wb") as file:
         file.write(response.content)
